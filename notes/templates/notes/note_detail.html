@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/templatemo-xtra-blog.css' %}" rel="stylesheet">
+</head>
+<body>
+	<header class="tm-header" id="tm-header">
+        <div class="tm-header-wrapper">
+            <div class="tm-site-header">
+                <h1 class="text-center">Notes Details</h1>
+            </div>
+            <nav class="tm-nav" id="tm-nav">            
+                <ul>
+                    <li class="tm-nav-item"><a href="{% url 'notes' %}" class="tm-nav-link">
+                        <i class="fas fa-home"></i>
+                        Notes List
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <main class="tm-main">        
+            <div class="row tm-row">
+                <div class="col-12">
+                    <hr class="tm-hr-primary tm-mb-55">
+                </div>
+            </div>
+            <div class="row tm-row">
+                <div class="col-lg-8 tm-post-col">
+                    <div class="tm-post-full">                    
+                        <div class="mb-4">
+                            <h2 class="pt-2 tm-color-primary tm-post-title">{{note.title}}</h2>
+                            <p class="tm-mb-40">{{note.created}}</p>
+                            <p>
+                                {{note.note}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tm-prev-next-wrapper">
+                    <a href="{% url 'update-note' note.id %}" class="mb-2 tm-btn tm-btn-primary tm-prev-next tm-mr-20">Edit</a>
+                    <a href="{% url 'delete-note' note.id %}" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Delete</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/templatemo-script.js' %}"></script>
+</body>
+</html>

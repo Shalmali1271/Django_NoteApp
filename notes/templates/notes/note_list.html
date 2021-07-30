@@ -1,0 +1,105 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Notes</title>
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/templatemo-xtra-blog.css' %}" rel="stylesheet">
+
+</head>
+<body>
+	<header class="tm-header" id="tm-header">
+        <div class="tm-header-wrapper">
+            <div class="tm-site-header">            
+                <h1 class="text-center">Notes</h1>
+            </div>
+            <nav class="tm-nav" id="tm-nav">            
+                <ul>
+                    <li class="tm-nav-item"><a href="{% url 'notes' %}" class="tm-nav-link">
+                        <i class="fas fa-home"></i>
+                        Notes List
+                    </a></li>
+                    <li class="tm-nav-item"><a href="{% url 'create-note' %}" class="tm-nav-link">
+                        <i class="fas fa-pen"></i>
+                        Add Note
+                    </a></li>
+                    {% if request.user.is_authenticated %}
+                    <li class="tm-nav-item"><a href="{% url 'logout' %}" class="tm-nav-link">
+                        Logout
+                    </a></li>
+                    {% else %}
+                    <li class="tm-nav-item"><a href="{% url 'login' %}" class="tm-nav-link">
+                        Login
+                    </a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <main class="tm-main">
+            {% if filter.qs != none %}
+                <!-- Search form -->
+                <div class="row tm-row">
+                    <div class="col-12">
+                        <form method="GET" class="form-inline tm-mb-80 tm-search-form">   
+                            {% csrf_token %}             
+                            <input class="form-control tm-search-input" name="search-area" value="{{search_input}}" type="text" placeholder="Search..." aria-label="Search">
+                            <button class="tm-search-button" type="submit">
+                                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+                            </button>                                
+                        </form>
+                        <div class="wrapper">
+                            <form method = 'GET' class="form-inline" action = "">
+                                {% render_field filter.form.start_created  class="form-control left" placeholder="Filter by From created date" %}
+                                {% render_field filter.form.end_created  class="form-control right" placeholder="Filter by To created date" %}
+                                <br>
+                                {% render_field filter.form.start_updated class="form-control left" placeholder="Filter by From Modified date" %} 
+                                {% render_field filter.form.end_updated class="form-control right" placeholder="Filter by To Modified date" %} 
+                                <br><br>
+                                {% render_field filter.form.ordering class="form-control tm-search-input" %}
+                                <br><br>
+                                <div class="form-group row text-right">
+                                    <div class="col-12">
+                                        <button class="tm-btn tm-btn-primary tm-btn-small" type="submit">Filter</button>                        
+                                    </div>                            
+                                </div>   
+                            </form>  
+                        </div>
+                    </div> 
+                </div> 
+                     
+                <div class="row tm-row">
+                    {% for note in filter.qs %}
+                        <article class="col-12 col-md-6 tm-post">
+                            <hr class="tm-hr-primary">
+                            <a href="{% url 'note' note.id %}" class="effect-lily tm-post-link tm-pt-20">
+                                <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{note.title}}</h2>
+                            </a>                    
+                            <div class="d-flex justify-content-between tm-pt-45">
+                                <span class="tm-color-primary">
+                                    Created : {{note.created}}
+                                    <br>
+                                    Last Modified : {{note.updated}}
+                                </span>
+                            </div>
+                            <hr>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <h2 class="tm-color-primary tm-post-title tm-mb-60">You Don't have Notes yet!</h2>
+                </div>
+            {% endif %}           
+        </main>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/templatemo-script.js' %}"></script>
+</body>
+</html>

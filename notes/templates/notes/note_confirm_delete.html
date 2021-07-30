@@ -1,0 +1,64 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Notes</title>
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/templatemo-xtra-blog.css' %}" rel="stylesheet">
+<!--
+    
+TemplateMo 553 Xtra Blog
+
+https://templatemo.com/tm-553-xtra-blog
+
+-->
+</head>
+<body>
+	<header class="tm-header" id="tm-header">
+        <div class="tm-header-wrapper">
+            <div class="tm-site-header">         
+                <h1 class="text-center">Add Note</h1>
+            </div>
+            <nav class="tm-nav" id="tm-nav">            
+                <ul>
+                    <li class="tm-nav-item"><a href="{% url 'notes' %}" class="tm-nav-link">
+                        <i class="fas fa-home"></i>
+                        Notes List
+                    </a></li>
+                    <li class="tm-nav-item"><a href="{% url 'create-note' %}" class="tm-nav-link">
+                        <i class="fas fa-pen"></i>
+                        Add Note
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <main class="tm-main">      
+            <div class="row tm-row tm-mb-120">
+                <div class="col-12">
+                    <h2 class="tm-color-primary tm-post-title tm-mb-60"></h2>
+                </div>
+                <div class="col-lg-7 tm-contact-left">
+                    <form method="POST" action="" class="mb-5 ml-auto mr-0 tm-contact-form">     
+                        {% csrf_token %}                   
+                        <h2 class="pt-2 tm-mb-40 tm-color-primary tm-post-title">Are you sure you want to delete {{note.title}}?</h2>
+                        <div class="form-group row text-right">
+                            <div class="col-12">
+                                <button class="tm-btn tm-btn-primary tm-btn-small">Delete</button>                        
+                            </div>                            
+                        </div>                                
+                    </form>
+                </div>
+            </div>      
+        </main>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/templatemo-script.js' %}"></script>
+</body>
+</html>
